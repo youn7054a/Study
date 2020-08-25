@@ -1,0 +1,90 @@
+﻿@model IEnumerable<dynamic>
+
+
+<div class="features_items">
+    <!--features_items-->
+    <h2 class="title text-center">Features Items</h2>
+
+    @foreach (var rows in Model)
+    {
+        var fields = rows as IDictionary<string, object>;
+
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products" onclick="location.href='@Url.Action("ShopDetail", "Home", new { code = @fields["Code"]})'">
+                        <div class="productinfo text-center" onclick="">
+                            <img src="~/Images/home/Hammer1.jpg" alt="" />
+                            <h2>\@fields["Price"]</h2>
+                            <p>@fields["Name"]</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    <div class="product-overlay">
+                        <div class="overlay-content">
+                            <h2>$56</h2>
+                            <p>메롱</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="choose">
+                    <ul class="nav nav-pills nav-justified">
+                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+</div><!--features_items-->
+@{
+    int startPage = ViewBag.startPage;
+    int endPage = ViewBag.endPage;
+    int pageNo = ViewBag.pageNo;
+    int totalPageNo = ViewBag.totalPageNo;
+    int beforePageNo = ((pageNo - 5) < 1) ? 1 : pageNo - 5;
+    int nextPageNo = ((pageNo + 5) > totalPageNo) ? totalPageNo : pageNo + 5;
+
+}
+
+<ul class="pagination">
+
+    @if (true)
+    {
+        string tag = "";
+        <li class=""><a href="/home/shop?pageno=@beforePageNo">&laquo;</a></li>
+        for (int i = startPage; i <= endPage; i++)
+        {
+            if (pageNo == i)
+                tag = "active";
+
+            <li class=@tag><a href="/home/shop?pageno=@i">@i</a></li>
+        }
+        <li class=""><a href="/home/shop?pageno=@nextPageNo">&raquo;</a></li>
+    }
+</ul>
+
+
+
+<script type="text/javascript">
+    function textfuc(code) {
+
+        alert(code);
+        @*window.location = '@Url.Action("ShopDetail", "Home", new { code = aa })';*@
+        window.location = '@Url.Action("ShopDetail", "Home")?code=' + code;
+        @*<input type="button" value="Create" onclick="location.href='@Url.Action("Create", "User")'" />*@
+
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

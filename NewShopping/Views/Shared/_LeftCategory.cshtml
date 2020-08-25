@@ -1,0 +1,137 @@
+﻿@using Dapper
+@using System.Data
+@using Microsoft.Data.SqlClient
+@using SHOP.DAL
+
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+
+@{
+
+    IEnumerable<dynamic> results1;
+    IEnumerable<dynamic> results2;
+
+    string mainTree = string.Empty;
+    string subTree = string.Empty;
+
+    string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+    var param = new DynamicParameters();
+    //param.Add("@userId", model.UserId);
+    //param.Add("@password", model.UserPassWord);
+
+
+    using (IDbConnection db = new SqlConnection(connectionString))
+    {
+        db.Open();
+
+        string sql1 = "select * from CommonCode1s";
+        string sql2 = "select * from CommonCode2s";
+
+
+        results1 = db.Query(sql1, param);
+        results2 = db.Query(sql2, param);
+
+        //var output = db.Query<string>("SELECT * FROM [User] ", commandType: CommandType.Text);
+    }
+}
+
+<div class="panel-group category-products" id="accordian">
+    <!--category-productsr-->
+
+    @foreach (var rows in results1)
+    {
+
+        var mainFields = rows as IDictionary<string, object>;
+
+        mainTree = mainFields["CODE1"].ToString();
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordian" href="#@mainTree">
+                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                        @mainFields["NAME"]
+                    </a>
+                </h4>
+            </div>
+            <div id="@mainTree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul>
+                        @foreach (var rows2 in results2)
+                        {
+                            var subFields = rows2 as IDictionary<string, object>;
+
+                            if (mainFields["CODE1"].ToString() == subFields["CODE1"].ToString())
+                            {
+                                <li><a href="#">@subFields["NAME"]</a></li>
+                            }
+
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                    Mens
+                </a>
+            </h4>
+        </div>
+        <div id="mens" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li><a href="#">Fendi</a></li>
+                    <li><a href="#">Guess</a></li>
+                    <li><a href="#">Valentino</a></li>
+                    <li><a href="#">Dior</a></li>
+                    <li><a href="#">Versace</a></li>
+                    <li><a href="#">Armani</a></li>
+                    <li><a href="#">Prada</a></li>
+                    <li><a href="#">Dolce and Gabbana</a></li>
+                    <li><a href="#">Chanel</a></li>
+                    <li><a href="#">Gucci</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a href="#">기타</a></h4>
+        </div>
+    </div>
+</div><!--/category-products-->
+
+<div class="brands_products">
+    <!--brands_products-->
+    <h2>Brands</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="#"> <span class="pull-right">(50)</span>해머스트랭스</a></li>
+            <li><a href="#"> <span class="pull-right">(56)</span>라이프 휘트니스</a></li>
+            <li><a href="#"> <span class="pull-right">(27)</span>싸이벡스</a></li>
+            <li><a href="#"> <span class="pull-right">(32)</span>개선</a></li>
+        </ul>
+    </div>
+</div><!--/brands_products-->
+
+<div class="price-range">
+    <!--price-range-->
+    <h2>Price Range</h2>
+    <div class="well text-center">
+        <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br />
+        <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
+    </div>
+</div><!--/price-range-->
+
+<div class="shipping text-center">
+    <!--shipping-->
+    <img src="images/home/shipping.jpg" alt="" />
+</div><!--/shipping-->

@@ -1,0 +1,12 @@
+D:\ComModel\bin\Debug\netcoreapp3.1\ComModel.deps.json
+D:\ComModel\bin\Debug\netcoreapp3.1\ComModel.dll
+D:\ComModel\bin\Debug\netcoreapp3.1\ComModel.pdb
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.csprojAssemblyReference.cache
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.AssemblyInfoInputs.cache
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.AssemblyInfo.cs
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.dll
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.pdb
+D:\ComModel\bin\Debug\netcoreapp3.1\ComModel.runtimeconfig.json
+D:\ComModel\bin\Debug\netcoreapp3.1\ComModel.runtimeconfig.dev.json
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.csproj.CoreCompileInputs.cache
+D:\ComModel\obj\Debug\netcoreapp3.1\ComModel.genruntimeconfig.cache
