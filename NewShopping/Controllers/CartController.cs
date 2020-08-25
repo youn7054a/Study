@@ -23,7 +23,7 @@ namespace ZNewShopping.Controllers
         public CartController(IConfiguration configuration)
         {
 
-            _configuration = configuration;
+            _configuration =    configuration;
 
         }
         
