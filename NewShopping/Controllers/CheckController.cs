@@ -10,6 +10,7 @@ namespace ZNewShopping.Controllers
     {
         public IActionResult Check()
         {
+           
             return View();
         }
     }

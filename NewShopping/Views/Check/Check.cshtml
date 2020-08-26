@@ -7,96 +7,36 @@
             </ol>
         </div><!--/breadcrums-->
 
-        <div class="step-one">
-            <h2 class="heading">Step1</h2>
-        </div>
-        <div class="checkout-options">
-            <h3>New User</h3>
-            <p>Checkout options</p>
-            <ul class="nav">
-                <li>
-                    <label><input type="checkbox"> Register Account</label>
-                </li>
-                <li>
-                    <label><input type="checkbox"> Guest Checkout</label>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-times"></i>Cancel</a>
-                </li>
-            </ul>
-        </div><!--/checkout-options-->
-
-        <div class="register-req">
-            <p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
-        </div><!--/register-req-->
-
         <div class="shopper-informations">
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="shopper-info">
-                        <p>Shopper Information</p>
-                        <form>
-                            <input type="text" placeholder="Display Name">
-                            <input type="text" placeholder="User Name">
-                            <input type="password" placeholder="Password">
-                            <input type="password" placeholder="Confirm password">
-                        </form>
-                        <a class="btn btn-primary" href="#">Get Quotes</a>
-                        <a class="btn btn-primary" href="#">Continue</a>
-                    </div>
-                </div>
                 <div class="col-sm-5 clearfix">
                     <div class="bill-to">
-                        <p>Bill To</p>
+                        <p>배송정보</p>
                         <div class="form-one">
                             <form>
-                                <input type="text" placeholder="Company Name">
-                                <input type="text" placeholder="Email*">
-                                <input type="text" placeholder="Title">
-                                <input type="text" placeholder="First Name *">
-                                <input type="text" placeholder="Middle Name">
-                                <input type="text" placeholder="Last Name *">
-                                <input type="text" placeholder="Address 1 *">
-                                <input type="text" placeholder="Address 2">
+                                @*<input type="text" placeholder="Email">*@
+                                <input type="text" placeholder="이름">
+                                <input type="text" id="address1" placeholder="주소">
+                                <input type="text" placeholder="세부정보">
+                                <button class="btn btn-primary" onclick="searchZip()">우편번호찾기</button>
                             </form>
                         </div>
                         <div class="form-two">
                             <form>
-                                <input type="text" placeholder="Zip / Postal Code *">
-                                <select>
-                                    <option>-- Country --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <select>
-                                    <option>-- State / Province / Region --</option>
-                                    <option>United States</option>
-                                    <option>Bangladesh</option>
-                                    <option>UK</option>
-                                    <option>India</option>
-                                    <option>Pakistan</option>
-                                    <option>Ucrane</option>
-                                    <option>Canada</option>
-                                    <option>Dubai</option>
-                                </select>
-                                <input type="password" placeholder="Confirm password">
+                                <input type="text" id="zipcode" placeholder="Zip / Postal Code *">
                                 <input type="text" placeholder="Phone *">
                                 <input type="text" placeholder="Mobile Phone">
-                                <input type="text" placeholder="Fax">
+                                <span>
+                                    <label><input type="checkbox"> 기존 정보 가져오기</label>
+                                </span>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="order-message">
-                        <p>Shipping Order</p>
-                        <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="16"></textarea>
+                        <p>전달사항</p>
+                        <textarea name="message" placeholder="Notes about your order, Special Notes for Delivery" rows="12"></textarea>
                         <label><input type="checkbox"> Shipping to bill address</label>
                     </div>
                 </div>
@@ -234,3 +174,19 @@
         </div>
     </div>
 </section> <!--/#cart_items-->
+
+
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function searchZip() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                $('#address1').val(data.address);
+                $('#zipcode').val(data.zonecode);
+                
+            }
+        }).open();
+    }
+</script>

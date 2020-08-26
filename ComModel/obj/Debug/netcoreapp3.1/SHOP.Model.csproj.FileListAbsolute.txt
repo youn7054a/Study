@@ -22,3 +22,15 @@ D:\Git\StudyCore\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.csproj.CoreCompileI
 D:\Git\StudyCore\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.dll
 D:\Git\StudyCore\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.pdb
 D:\Git\StudyCore\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.genruntimeconfig.cache
+D:\Git\Study\ComModel\bin\Debug\netcoreapp3.1\SHOP.Model.deps.json
+D:\Git\Study\ComModel\bin\Debug\netcoreapp3.1\SHOP.Model.runtimeconfig.json
+D:\Git\Study\ComModel\bin\Debug\netcoreapp3.1\SHOP.Model.runtimeconfig.dev.json
+D:\Git\Study\ComModel\bin\Debug\netcoreapp3.1\SHOP.Model.dll
+D:\Git\Study\ComModel\bin\Debug\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.csprojAssemblyReference.cache
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.AssemblyInfoInputs.cache
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.AssemblyInfo.cs
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.csproj.CoreCompileInputs.cache
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.dll
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\ComModel\obj\Debug\netcoreapp3.1\SHOP.Model.genruntimeconfig.cache
