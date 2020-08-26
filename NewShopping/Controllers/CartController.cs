@@ -37,7 +37,7 @@ namespace ZNewShopping.Controllers
 
             if (HttpContext.Session.GetInt32("Login_User") == null)
             {
-                HttpContext.Session.SetInt32("Login_User", 1000000);
+                HttpContext.Session.SetInt32("Login_User", 1000000);//비회원처리 구현해야함
             }
 
             var param = new DynamicParameters();
