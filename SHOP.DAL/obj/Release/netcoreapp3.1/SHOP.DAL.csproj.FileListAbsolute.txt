@@ -1,0 +1,12 @@
+D:\Git\Study\SHOP.DAL\bin\Release\netcoreapp3.1\SHOP.DAL.deps.json
+D:\Git\Study\SHOP.DAL\bin\Release\netcoreapp3.1\SHOP.DAL.dll
+D:\Git\Study\SHOP.DAL\bin\Release\netcoreapp3.1\SHOP.DAL.pdb
+D:\Git\Study\SHOP.DAL\bin\Release\netcoreapp3.1\SHOP.Model.dll
+D:\Git\Study\SHOP.DAL\bin\Release\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.csprojAssemblyReference.cache
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.AssemblyInfoInputs.cache
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.AssemblyInfo.cs
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.csproj.CoreCompileInputs.cache
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.csproj.CopyComplete
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.dll
+D:\Git\Study\SHOP.DAL\obj\Release\netcoreapp3.1\SHOP.DAL.pdb

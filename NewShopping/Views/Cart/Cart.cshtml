@@ -31,31 +31,34 @@
                         @foreach (var rows in Model)
                         {
                             var fields = rows as IDictionary<string, object>;
-                            <tr>
-                                <td class="cart_product">
-                                    <a href="#"><img src="~/images/cart/one.png" alt=""></a>
-                                </td>
-                                <td class="cart_description">
-                                    <h4><a href="#">@fields["Name"]</a></h4>
-                                    <p>Web ID: @fields["Code"]</p>
-                                </td>
-                                <td class="cart_price">
-                                    <p>$59</p>
-                                </td>
-                                <td class="cart_quantity">
-                                    <div class="cart_quantity_button">
-                                        <a id="@fields["Code"]up" class="cart_quantity_up" href="#" onclick="countUp()"> + </a>
-                                        <input id="@fields["Code"]input" class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                        <a id="@fields["Code"]down" class="cart_quantity_down" href="#" onclick="countDown()"> - </a>
-                                    </div>
-                                </td>
-                                <td class="cart_total">
-                                    <p class="cart_total_price">$59</p>
-                                </td>
-                                <td id="@fields["Code"]-delete" class="cart_delete">
-                                    <a class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
-                                </td>
-                            </tr>
+                        <tr id="@fields["Code"]">
+                            <td class="cart_product">
+                                <a href="#"><img src="~/images/cart/one.png" alt=""></a>
+                            </td>
+                            <td class="cart_description">
+                                <h4><a href="#">@fields["Name"]</a></h4>
+                                <p>Web ID: @fields["Code"]</p>
+                            </td>
+                            <td class="cart_price">
+                                <p id="@fields["Code"]price">@fields["Price"]</p>
+                            </td>
+                            <td class="cart_quantity">
+                                <div class="cart_quantity_button">
+                                    <a id="@fields["Code"]up" class="cart_quantity_up"> + </a>
+                                    <input id="@fields["Code"]input" class="cart_quantity_input" type="text" name="quantity" value="@fields["Count"]" autocomplete="off" size="2">
+                                    <a id="@fields["Code"]down" class="cart_quantity_down"> - </a>
+                                </div>
+                            </td>
+                            @{
+                                var totalprice = Convert.ToInt32(fields["Price"]) * Convert.ToInt32(fields["Count"]);
+                            }
+                            <td class="cart_total">
+                                <p id="@fields["Code"]totalprice" class="cart_total_price">@totalprice</p>
+                            </td>
+                            <td id="@fields["Code"]-delete" class="cart_delete">
+                                <a class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 }
@@ -128,13 +131,11 @@
             <div class="col-sm-6">
                 <div class="total_area">
                     <ul>
-                        <li>Cart Sub Total <span>$59</span></li>
-                        <li>Eco Tax <span>$2</span></li>
+                        <li>Cart Sub Total <span id="cartsubtotal"></span></li>
                         <li>Shipping Cost <span>Free</span></li>
-                        <li>Total <span>$61</span></li>
+                        <li>Total <span id="total">$61</span></li>
                     </ul>
-                    <a class="btn btn-default update" href="#">Update</a>
-                    <a class="btn btn-default check_out" href="#">Check Out</a>
+                    <a class="btn btn-default check_out" href="~/Check/Check">Check Out</a>
                 </div>
             </div>
         </div>
@@ -147,11 +148,13 @@
     {
         var fields = rows as IDictionary<string, object>;
 
-        <script>
+<script>
      $('#@fields["Code"]up').click(function () {
          var quantity = $('#@fields["Code"]input').val();
          quantity = (quantity)*1 + 1;
          $('#@fields["Code"]input').val(quantity);
+
+         setPrice(@fields["Code"]);
      });
 
      $('#@fields["Code"]down').click(function () {
@@ -159,10 +162,13 @@
          quantity = (quantity)*1 - 1;
          $('#@fields["Code"]input').val(quantity);
      });
-        </script>
+</script>
 
     }
 }
+
+
+
 <script>
     $('.cart_delete').click(function () {
         alert(1);
@@ -186,6 +192,33 @@
         });
 
     });
+
+    function setPrice(code) {
+
+        var totalprice = $('#' + code + 'input').val() * $('#' + code + 'price').text() * 1;
+
+        $('#' + code + 'totalprice').text(totalprice);
+
+        setCartSubPrice();
+    }
+
+    setCartSubPrice();
+
+    function setCartSubPrice() {
+
+        var price = 0;
+        var nodes = document.querySelector("tbody");
+
+        for (var i = 0; i < nodes.childElementCount; i++) {
+            price = price + $('#' + nodes.children[0].id + 'totalprice').text() * 1;
+        }
+
+        $('#cartsubtotal').text(price);
+        $('#total').text(price);
+
+    }
+
+
 </script>
 
 

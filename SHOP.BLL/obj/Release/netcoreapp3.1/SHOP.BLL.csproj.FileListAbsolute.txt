@@ -1,0 +1,14 @@
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.BLL.deps.json
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.BLL.dll
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.BLL.pdb
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.DAL.dll
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.Model.dll
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.DAL.pdb
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.csprojAssemblyReference.cache
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.AssemblyInfoInputs.cache
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.AssemblyInfo.cs
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.csproj.CoreCompileInputs.cache
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.csproj.CopyComplete
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.dll
+D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.pdb

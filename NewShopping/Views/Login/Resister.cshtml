@@ -1,0 +1,23 @@
+﻿@model SHOP.Model.User
+
+<text id="facebook"></text>
+<section id="form">
+    <!--form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="signup-form">
+                    <!--sign up form-->
+                    <h2>New User Signup!</h2>
+                    <form method="post" asp-controller="Login" asp-action="Resister">
+                        <input type="text" placeholder="Name" asp-for="Name" />
+                        <input type="email" placeholder="Email Address" asp-for="UserID" />
+                        <input id="password1" type="password" placeholder="Password" asp-for="Password" />
+                        <input id="password2" type="password" placeholder="Password" onfocusout="chkPW()" />
+                        <button type="submit" class="btn btn-default">Signup</button>
+                    </form>
+                </div><!--/sign up form-->
+            </div>
+        </div>
+    </div>
+</section><!--/form-->

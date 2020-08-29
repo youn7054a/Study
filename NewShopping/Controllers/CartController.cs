@@ -26,6 +26,11 @@ namespace ZNewShopping.Controllers
             _configuration =    configuration;
 
         }
+
+        public IActionResult index()
+        {
+            return View();
+        }
         
         [HttpPost]
         public async Task<IActionResult> AddtoCart(string item_qty, string item_code, string item_cost)
@@ -76,8 +81,6 @@ namespace ZNewShopping.Controllers
                     return Json(new { success = true });
                 }
             }
-
-
         }
 
         public IActionResult Cart()

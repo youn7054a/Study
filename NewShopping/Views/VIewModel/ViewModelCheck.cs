@@ -9,6 +9,8 @@ namespace ZNewShopping.Views.VIewModel
     {
         public Checkout Checkout { get; set; }
         public ShipInfo ShipInfo { get; set; }
+        public Carts Carts { get; set; }
+
     }
 }
  

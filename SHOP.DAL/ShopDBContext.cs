@@ -15,8 +15,12 @@ namespace SHOP.DAL
         public virtual DbSet<CommonCode2> CommonCode2s { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Cart> Carts { get; set; }
-
         public virtual DbSet<User> Users { get; set; }
+
+        public virtual DbSet<Checkout> Checkouts { get; set; }
+        public virtual DbSet<ShipInfo> ShipInfos { get; set; }
+
+
 
         //엔티티 프레임워크 멀티키사용
         protected override void OnModelCreating(ModelBuilder modelBuilder)

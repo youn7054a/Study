@@ -51,6 +51,11 @@ namespace ZNewShopping.Controllers
             return View(model);
         }
 
+        public IActionResult Resister()
+        {
+            return View();
+        }
+
 
         [HttpPost]
         public IActionResult Resister(User model)
@@ -82,19 +87,26 @@ namespace ZNewShopping.Controllers
 
                 if (user == null)
                 {
-                    return StatusCode(404);
-                    //return Ok(new ResponseStatus() { Status = Constants.RESPONSE_FAIL, Message = repository.LastErrorMsg });
+                    user = new User()
+                    {
+                        UserID = info.email,
+                        Facebook = "Y"
+                    };
+
+                    db.Users.Add(user);
+                    db.SaveChanges();
                 }
-                else
-                {
-                    HttpContext.Session.SetInt32("Login_User", user.UserNo);
 
-                    ReturnUrl rUrl = new ReturnUrl { url = returnUrl };
+                user = db.Users.FirstOrDefault(u => u.UserID.Equals(info.email));
 
-                    return Json(rUrl);
+                HttpContext.Session.SetInt32("Login_User", user.UserNo);
 
-                    //return Ok(Json(new {url = returnUrl }));
-                }
+                ReturnUrl rUrl = new ReturnUrl { url = returnUrl };
+
+                return Json(rUrl);
+
+                //return Ok(Json(new {url = returnUrl }));
+
             }
 
         }

@@ -1,146 +1,122 @@
 ﻿@model SHOP.Model.User
 
-<section id="form">
-    <!--form-->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4 col-sm-offset-1">
-                <div class="login-form">
-                    <!--login form-->
-                    <h2>Login to your account</h2>
-                    <form method="post" asp-controller="Login" asp-action="Login">
-                        @Html.ValidationMessage("LoginError", new { @style = "color:red" })
-                        <input type="email" placeholder="E-mail" asp-for="UserID" />
-                        <input type="password" placeholder="Password" asp-for="Password" />
-                        <span>
-                            <input type="checkbox" class="checkbox" asp-for="KeepLogin">
-                            Keep me signed in
-                        </span>
-                        <button type="submit" class="btn btn-default">Login</button>
-                    </form>
-                </div><!--/login form-->
-                <div class="form-group" style="margin-top:5px">
-                    <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="true" data-width="" onlogin="getFacebookInfo()"></div>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" onclick="getFacebookInfo()">facebook으로 로그인</button>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <h2 class="or">OR</h2>
-            </div>
-            <div class="col-sm-4">
-                <div class="signup-form">
-                    <!--sign up form-->
-                    <h2>New User Signup!</h2>
-                    <form method="post" asp-controller="Login" asp-action="Resister">
-                        <input type="text" placeholder="Name" asp-for="Name" />
-                        <input type="email" placeholder="Email Address" asp-for="UserID" />
-                        <input id="password1" type="password" placeholder="Password" asp-for="Password" />
-                        <input id="password2" type="password" placeholder="Password" onfocusout="chkPW()" />
-                        <button type="submit" class="btn btn-default">Signup</button>
-                    </form>
-                </div><!--/sign up form-->
-            </div>
-        </div>
-    </div>
-</section><!--/form-->
-
-
-<div id="fb-root"></div>
-
-
-<script type="text/javascript">
+    <script type="text/javascript">
 
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '281965922891178',
+                autoLogAppEvents: true,
                 xfbml: true,
                 version: 'v8.0'
             });
+
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {
+                    document.querySelector('#authBtn').innerText  = "Facebook으로 로그인하기";
+
+                } else {
+                    document.querySelector('#authBtn').innerText = "Facebook으로 가입 후 로그인하기";
+                }
+            })
+
         };
 
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/ko_KR/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        var loginCheck = function (val) {
+            if (val == 'Facebook으로 로그인하기') {
+                FB.login(function (response) {
+                    //location.reload();
+                    if (response.status === 'connected') {
+                        document.querySelector('#authBtn').innerText = "Logout";
 
-    var facebookEmail;
-
-    function getFacebookInfo() {
-
-        FB.api('/me', { fields: 'email,name' }, function (response) {
-            console.log(response);
-            facebookEmail = response.email;
-        });
-
-        chkLogin();
-    }
-
-    function chkLogin() {
-
-        FB.getLoginStatus(function (response) {
-
-            var dataJSON = { "email": facebookEmail }
-
-            if (response.status === 'connected') {
-                // The user is logged in and has authenticated your
-                // app, and response.authResponse supplies
-                // the user's ID, a valid access token, a signed
-                // request, and the time the access token
-                // and signed request each expire.
-                var uid = response.authResponse.userID;
-                var email = response.authResponse.email;;
-                var accessToken = response.authResponse.accessToken;
-                document.getElementsByClassName("fb-login-button")[0].style.display = 'inline';
-
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("OutLogin", "Login")",
-                    data: JSON.stringify(dataJSON),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        //window.location.href=data.url;
-                        window.history.back();
-                    },
-                    error: function () {
-                        getFacebookInfo();
+                        FB.api('/me', { fields: 'email' }, function (response) {
+                            var dataJSON = { "email": response.email };
+                            $.ajax({
+                               type: "POST",
+                               url: "@Url.Action("OutLogin", "Login")",
+                               data: JSON.stringify(dataJSON),
+                               contentType: "application/json; charset=utf-8",
+                               dataType: "json",
+                               success: function (data) {
+                                   window.history.back();
+                               },
+                               error: function () {
+                               }
+                           });
+                          }
+                        );
+                    } else {
+                        document.querySelector('#authBtn').innerText = "Login";
                     }
-                });
-            } else if (response.status === 'not_authorized') {
-                // The user hasn't authorized your application.  They
-                // must click the Login button, or you must call FB.login
-                // in response to a user gesture, to launch a login dialog.
+                }, { scope: 'public_profile,email' });
 
-                document.getElementsByClassName("fb-login-button")[0].style.display = 'inline';
-                console.log(2);
             } else {
-                document.getElementsByClassName("fb-login-button")[0].style.display = 'inline';
-                console.log(3);
+                FB.logout(function (response) {
+                    location.reload();
+                });
             }
-        });
-    }
-
-    $(document).ready(function () {
-    });
-
-</script>
-
-<script type="text/javascript">
-
-    function chkPW() {
-        var pass1 = document.querySelector("#password1").value;
-        var pass2 = document.querySelector("#password2").value;
-
-        if (pass1 != pass2) {
-            alert("동일한 비밀번호를 입력해주세요");
-            pass2.value = "";
-            pass2.focus();
         }
-    }
 
-</script>
+    </script>
+
+    <text id="facebook"></text>
+    <section id="form">
+        <!--form-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-1">
+                    <div class="login-form">
+                        <!--login form-->
+                        <h2>Login to your account</h2>
+                        <form method="post" asp-controller="Login" asp-action="Login">
+                            @Html.ValidationMessage("LoginError", new { @style = "color:red" })
+                            <input type="email" placeholder="E-mail" asp-for="UserID" />
+                            <input type="password" placeholder="Password" asp-for="Password" />
+                            <span>
+                                <input type="checkbox" class="checkbox" asp-for="KeepLogin">
+                                Keep me signed in
+                            </span>
+                            <button type="submit" class="btn btn-default">Login</button>
+                        </form>
+                    </div><!--/login form-->
+                    @*<div class="form-group" style="margin-top:5px">
+                            <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="true" data-width=""></div>
+                        </div>*@
+                    <div class="form-group">
+                        <button class="btn btn-primary" id="authBtn" onclick="loginCheck(this.innerText)">FaceBook으로 로그인</button>
+                    </div>
+                </div>
+                <div class="col-sm-1" id="test">
+                    <h2 class="or">OR</h2>
+                </div>
+                <div class="col-sm-4">
+                    <div class="signup-form">
+                        <!--sign up form-->
+                        <h2>New User Signup!</h2>
+                        <form method="post" asp-controller="Login" asp-action="Resister">
+                            <input type="text" placeholder="Name" asp-for="Name" />
+                            <input type="email" placeholder="Email Address" asp-for="UserID" />
+                            <input id="password1" type="password" placeholder="Password" asp-for="Password" />
+                            <input id="password2" type="password" placeholder="Password" onfocusout="chkPW()" />
+                            <button type="submit" class="btn btn-default">Signup</button>
+                        </form>
+                    </div><!--/sign up form-->
+                </div>
+            </div>
+        </div>
+    </section><!--/form-->
+
+
+    <script type="text/javascript">
+
+        function chkPW() {
+            var pass1 = document.querySelector("#password1").value;
+            var pass2 = document.querySelector("#password2").value;
+
+            if (pass1 != pass2) {
+                alert("동일한 비밀번호를 입력해주세요");
+                pass2.value = "";
+                pass2.focus();
+            }
+        }
+
+    </script>
