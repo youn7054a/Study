@@ -64,9 +64,9 @@
 
                             if (mainFields["CODE1"].ToString() == subFields["CODE1"].ToString())
                             {
-                                <li><a href="#">@subFields["NAME"]</a></li>
+                                //<li><a href="~/Home/Shop/?page=1&code1=@subFields["CODE1"]&code2=@subFields["CODE2"]">@subFields["NAME"]</a></li>
+                                <li><a asp-controller="Home" asp-action="Shop" asp-route-code1="@subFields["CODE1"]" asp-route-code2="@subFields["CODE2"]">@subFields["NAME"]</a></li>
                             }
-
                         }
                     </ul>
                 </div>
@@ -108,19 +108,18 @@
         </div>
     </div>
 </div><!--/category-products-->
-
-<div class="brands_products">
-    <!--brands_products-->
-    <h2>Brands</h2>
-    <div class="brands-name">
-        <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"> <span class="pull-right">(50)</span>해머스트랭스</a></li>
-            <li><a href="#"> <span class="pull-right">(56)</span>라이프 휘트니스</a></li>
-            <li><a href="#"> <span class="pull-right">(27)</span>싸이벡스</a></li>
-            <li><a href="#"> <span class="pull-right">(32)</span>개선</a></li>
-        </ul>
-    </div>
-</div><!--/brands_products-->
+@*<div class="brands_products">
+        <!--brands_products-->
+        <h2>Brands</h2>
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="#"> <span class="pull-right">(50)</span>해머스트랭스</a></li>
+                <li><a href="#"> <span class="pull-right">(56)</span>라이프 휘트니스</a></li>
+                <li><a href="#"> <span class="pull-right">(27)</span>싸이벡스</a></li>
+                <li><a href="#"> <span class="pull-right">(32)</span>개선</a></li>
+            </ul>
+        </div>
+    </div><!--/brands_products-->*@
 
 <div class="price-range">
     <!--price-range-->

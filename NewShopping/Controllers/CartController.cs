@@ -22,9 +22,7 @@ namespace ZNewShopping.Controllers
 
         public CartController(IConfiguration configuration)
         {
-
-            _configuration =    configuration;
-
+            _configuration = configuration;
         }
 
         public IActionResult index()
@@ -63,7 +61,7 @@ namespace ZNewShopping.Controllers
         }
 
         [HttpPost]
-        public  IActionResult DeletetoCart([FromBody]Cart cart)
+        public IActionResult DeletetoCart([FromBody]Cart cart)
         {
             using (var db = new ShopDBContext())
             {
@@ -78,7 +76,11 @@ namespace ZNewShopping.Controllers
                     db.Carts.Remove(vcart);
                     db.SaveChanges();
 
-                    return Json(new { success = true });
+                    //return Json(new { success = true });
+                    //return PartialView("_CartView", db.Carts.Where(u => u.UserNo == cart.UserNo).ToList()) ;
+                    //부분뷰에서 처리되게 변경
+                    //뷰리턴
+                    return PartialView("_CartView", cart.UserNo);
                 }
             }
         }

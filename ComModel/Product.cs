@@ -10,6 +10,9 @@ namespace ComModel
     {
         [Key]
         public int Code { get; set; }
+
+        public string ComCode1 { get; set; }
+        public string ComCode2 { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }

@@ -1,5 +1,4 @@
-﻿@model IEnumerable<dynamic>
-
+﻿
 @{
     var controller = ViewContext.RouteData.Values["Controller"];
     var action = ViewContext.RouteData.Values["Action"];
@@ -13,56 +12,8 @@
                 <li class="active">Shopping Cart</li>
             </ol>
         </div>
-        <div class="table-responsive cart_info">
-            <table class="table table-condensed">
-                <thead>
-                    <tr class="cart_menu">
-                        <td class="image">Item</td>
-                        <td class="description"></td>
-                        <td class="price">Price</td>
-                        <td class="quantity">Quantity</td>
-                        <td class="total">Total</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                @if (@Model != null)
-                {
-                    <tbody>
-                        @foreach (var rows in Model)
-                        {
-                            var fields = rows as IDictionary<string, object>;
-                        <tr id="@fields["Code"]">
-                            <td class="cart_product">
-                                <a href="#"><img src="~/images/cart/one.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="#">@fields["Name"]</a></h4>
-                                <p>Web ID: @fields["Code"]</p>
-                            </td>
-                            <td class="cart_price">
-                                <p id="@fields["Code"]price">@fields["Price"]</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a id="@fields["Code"]up" class="cart_quantity_up"> + </a>
-                                    <input id="@fields["Code"]input" class="cart_quantity_input" type="text" name="quantity" value="@fields["Count"]" autocomplete="off" size="2">
-                                    <a id="@fields["Code"]down" class="cart_quantity_down"> - </a>
-                                </div>
-                            </td>
-                            @{
-                                var totalprice = Convert.ToInt32(fields["Price"]) * Convert.ToInt32(fields["Count"]);
-                            }
-                            <td class="cart_total">
-                                <p id="@fields["Code"]totalprice" class="cart_total_price">@totalprice</p>
-                            </td>
-                            <td id="@fields["Code"]-delete" class="cart_delete">
-                                <a class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                }
-            </table>
+        <div class="table-responsive cart_info" id="part">
+             @await Html.PartialAsync("_CartView", ViewData["userNo"])
         </div>
     </div>
 </section> <!--/#cart_items-->
@@ -171,9 +122,14 @@
 
 <script>
     $('.cart_delete').click(function () {
-        alert(1);
         var id = $(this).attr('id').split("-");
-        var jsonInput = { Code: id[0], UserNo: @ViewBag.UserNo*1 };
+
+        var jsonInput = {
+
+            UserNo: @ViewBag.UserNo * 1,
+            Code: id[0] *1
+
+        };
 
         alert(JSON.stringify(jsonInput));
 
@@ -181,10 +137,13 @@
             type: "POST",
             url: "@Url.Action("DeleteToCart", "Cart")",
             data: JSON.stringify(jsonInput) ,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                window.location.href = "@Url.Action("Cart", "Cart")";
+            contentType: "application/json;",
+            dataType: "html",
+            success: function (response) {
+                @*window.location.href = "@Url.Action("Cart", "Cart")";*@
+                //해당 요소만 변경 되게 partialview로 변경
+                $('#part').html(response);
+
             },
             error: function () {
                 alert("Error");

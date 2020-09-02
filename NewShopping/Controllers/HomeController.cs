@@ -37,7 +37,7 @@ namespace NewShopping.Controllers
 
 
         [HttpGet]
-        public IActionResult Shop(int pageNo = 1)
+        public IActionResult Shop(int pageNo = 1, string code1 = "", string code2 = "")
         {
 
             IEnumerable<dynamic> results;
@@ -52,6 +52,8 @@ namespace NewShopping.Controllers
 
             param.Add("PAGENO", pageNo);
             param.Add("PAGESIZE", pageSize);
+            param.Add("CODE1", code1);
+            param.Add("CODE2", code2);
             param.Add("TOTALCOUNT", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             using (IDbConnection db = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))

@@ -1,0 +1,67 @@
+﻿@*모델로 받거나 그냥 부분뷰에서 디비 처리 하는게...*@
+@model int
+@using SHOP.DAL
+@using SHOP.Model
+@using Microsoft.EntityFrameworkCore;
+
+@{
+
+    List<Cart> cart  = new List<Cart>();
+
+    using (var db = new ShopDBContext())
+    {
+        cart = db.Carts
+                .Where(c => c.UserNo == Model)
+                .Include(u => u.Product)
+                .ToList();
+    }
+}
+
+<table class="table table-condensed">
+    <thead>
+        <tr class="cart_menu">
+            <td class="image">Item</td>
+            <td class="description"></td>
+            <td class="price">Price</td>
+            <td class="quantity">Quantity</td>
+            <td class="total">Total</td>
+            <td></td>
+        </tr>
+    </thead>
+    @if (@cart != null)
+    {
+        <tbody>
+            @foreach (var item in cart)
+            {
+                <tr id="@item.Code">
+                    <td class="cart_product">
+                        <a href="#"><img src="~/images/cart/one.png" alt=""></a>
+                    </td>
+                    <td class="cart_description">
+                        <h4><a href="#">@item.Product.Name</a></h4>
+                        <p>Web ID: @item.Code</p>
+                    </td>
+                    <td class="cart_price">
+                        <p id="@{@item.Product.Code}price">@item.Product.Price</p>
+                    </td>
+                    <td class="cart_quantity">
+                        <div class="cart_quantity_button">
+                            <a id="@{@item.Product.Code}up" class="cart_quantity_up"> + </a>
+                            <input id="@{@item.Product.Code}input" class="cart_quantity_input" type="text" name="quantity" value="@item.Count" autocomplete="off" size="2">
+                            <a id="@{@item.Product.Code}down" class="cart_quantity_down"> - </a>
+                        </div>
+                    </td>
+                    @{
+                        var totalprice = Convert.ToInt32(item.Product.Price) * Convert.ToInt32(item.Count);
+                    }
+                    <td class="cart_total">
+                        <p id="@{@item.Product.Code}totalprice" class="cart_total_price">@totalprice</p>
+                    </td>
+                    <td id="@{@item.Product.Code}-delete" class="cart_delete">
+                        <a class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    }
+</table>
