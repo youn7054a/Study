@@ -1,0 +1,110 @@
+﻿@using SHOP.Model
+@inject IJSRuntime JSRuntime
+@inject SHOP.BLL.ProductBLL pro
+
+    <div class="modal fade @showtag" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: @styletag;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="closeModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <EditForm Model="@product">
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-form-label">코드:</label>
+                            <input @bind-value="@product.Code" type="text" class="form-control" disabled>
+                            <label class="col-form-label">공통코드1 :</label>
+                            <select @onchange="setSelectBox" class="form-control" id="exampleFormControlSelect1">
+                                @foreach (var item in com1)
+                                {
+                                    <option value="@item.Code1">@item.Name</option>
+                                }
+                            </select>
+                            <label class="col-form-label">공통코드2 :</label>
+                            <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect1">
+                                @foreach (var item in com2)
+                                {
+                                    <option value="@item.Code2">@item.Name</option>
+                                }
+                            </select>
+                            <label class="col-form-label">제품이름:</label>
+                            <input @bind="@product.Name" type="text" class="form-control">
+                            <label class="col-form-label">가격:</label>
+                            <input @bind="@product.Price" type="text" class="form-control">
+                            <label class="col-form-label">설명:</label>
+                            <input @bind="@product.Description" type="text" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="closeModal">Close</button>
+                        <button type="button" class="btn btn-primary" @onclick="button_onclick">Save changes</button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+
+
+
+@code
+{
+
+    
+    Product product = new Product();
+    List<CommonCode1> com1 = new List<CommonCode1>();
+    List<CommonCode2> com2 = new List<CommonCode2>();
+
+
+    string com1code = "";
+    string com2code = "";
+
+    string showtag = "";
+    string styletag = "none";
+
+    [Parameter] public EventCallback<string> OnClick { get; set; }
+
+
+    private void button_onclick()
+    {
+        pro.CreateProduct(product);
+        product = new Product();
+        OnClick.InvokeAsync("");
+        closeModal();
+    }
+
+    public void showModal()
+    {
+        showtag = "show";
+        styletag = "block";
+        StateHasChanged();
+    }
+
+    public void closeModal()
+    {
+        showtag = "";
+        styletag = "none";
+        StateHasChanged();
+    }
+
+    public void setSelectBox(ChangeEventArgs e)
+    {
+
+        product.ComCode1 = e.Value.ToString();
+        com2 = pro.GetCom2List(e.Value.ToString());
+    }
+
+    protected override void OnInitialized()
+    {
+        com1 = pro.GetCom1List();
+        com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
+        product.ComCode1 = com1.First().Code1;
+        product.ComCode2 = com2.First().Code1;
+    }
+
+}
+

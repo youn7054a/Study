@@ -1,5 +1,4 @@
-﻿using ComModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ZNewShopping.Views.VIewModel

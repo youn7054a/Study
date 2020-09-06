@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComModel\SHOP.Model.csproj" />
     <ProjectReference Include="..\SHOP.BLL\SHOP.BLL.csproj" />
     <ProjectReference Include="..\SHOP.DAL\SHOP.DAL.csproj" />
   </ItemGroup>

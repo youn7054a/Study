@@ -1,0 +1,12 @@
+D:\Git\Study\SHOP.IDAL\bin\Debug\netcoreapp3.1\SHOP.IDAL.deps.json
+D:\Git\Study\SHOP.IDAL\bin\Debug\netcoreapp3.1\SHOP.IDAL.dll
+D:\Git\Study\SHOP.IDAL\bin\Debug\netcoreapp3.1\SHOP.IDAL.pdb
+D:\Git\Study\SHOP.IDAL\bin\Debug\netcoreapp3.1\SHOP.Model.dll
+D:\Git\Study\SHOP.IDAL\bin\Debug\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.csprojAssemblyReference.cache
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.AssemblyInfoInputs.cache
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.AssemblyInfo.cs
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.csproj.CoreCompileInputs.cache
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.csproj.CopyComplete
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.dll
+D:\Git\Study\SHOP.IDAL\obj\Debug\netcoreapp3.1\SHOP.IDAL.pdb

@@ -1259,6 +1259,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "3.1.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.6",
+          "SHOP.IDAL": "1.0.0",
           "SHOP.Model": "1.0.0"
         },
         "compile": {
@@ -1266,6 +1267,19 @@
         },
         "runtime": {
           "bin/placeholder/SHOP.DAL.dll": {}
+        }
+      },
+      "SHOP.IDAL/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "SHOP.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SHOP.IDAL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SHOP.IDAL.dll": {}
         }
       },
       "SHOP.Model/1.0.0": {
@@ -4911,10 +4925,15 @@
       "path": "../SHOP.DAL/SHOP.DAL.csproj",
       "msbuildProject": "../SHOP.DAL/SHOP.DAL.csproj"
     },
+    "SHOP.IDAL/1.0.0": {
+      "type": "project",
+      "path": "../SHOP.IDAL/SHOP.IDAL.csproj",
+      "msbuildProject": "../SHOP.IDAL/SHOP.IDAL.csproj"
+    },
     "SHOP.Model/1.0.0": {
       "type": "project",
-      "path": "../ComModel/SHOP.Model.csproj",
-      "msbuildProject": "../ComModel/SHOP.Model.csproj"
+      "path": "../SHOP.Model/SHOP.Model.csproj",
+      "msbuildProject": "../SHOP.Model/SHOP.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {

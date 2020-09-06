@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComModel\SHOP.Model.csproj" />
+    <ProjectReference Include="..\SHOP.IDAL\SHOP.IDAL.csproj" />
+    <ProjectReference Include="..\SHOP.Model\SHOP.Model.csproj" />
   </ItemGroup>
 
 </Project>

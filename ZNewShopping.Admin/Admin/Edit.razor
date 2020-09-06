@@ -1,0 +1,21 @@
+﻿@page "/Admin/Edit"
+@page "/Admin/Edit/{code}"
+
+@inject IJSRuntime JsRuntime
+
+
+@inject NavigationManager navigationManager
+
+<h3>Edit</h3>
+
+@code {
+    [Parameter]
+    public int Code { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+}

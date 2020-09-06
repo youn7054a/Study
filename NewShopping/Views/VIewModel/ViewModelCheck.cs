@@ -1,5 +1,4 @@
-﻿using ComModel;
-using SHOP.Model;
+﻿using SHOP.Model;
 using System;
 using System.Collections.Generic;
 

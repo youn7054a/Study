@@ -4,7 +4,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using ComModel;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
@@ -14,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using NewShopping.Models;
 using PagedList.Core;
 using SHOP.DAL;
+using SHOP.Model;
 using ZNewShopping.Views.VIewModel;
 
 namespace NewShopping.Controllers

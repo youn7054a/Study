@@ -25,8 +25,10 @@ D:\Git\StudyCore\SHOP.DAL\obj\Debug\netcoreapp3.1\SHOP.DAL.pdb
 D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.DAL.deps.json
 D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.DAL.dll
 D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.DAL.pdb
+D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.IDAL.dll
 D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.Model.dll
 D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.Model.pdb
+D:\Git\Study\SHOP.DAL\bin\Debug\netcoreapp3.1\SHOP.IDAL.pdb
 D:\Git\Study\SHOP.DAL\obj\Debug\netcoreapp3.1\SHOP.DAL.csprojAssemblyReference.cache
 D:\Git\Study\SHOP.DAL\obj\Debug\netcoreapp3.1\SHOP.DAL.AssemblyInfoInputs.cache
 D:\Git\Study\SHOP.DAL\obj\Debug\netcoreapp3.1\SHOP.DAL.AssemblyInfo.cs

@@ -1,5 +1,4 @@
-﻿using ComModel;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SHOP.Model;
 
 namespace SHOP.DAL

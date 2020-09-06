@@ -1,0 +1,98 @@
+﻿@page "/Admin"
+@page "/Admin/Index"
+
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+@inject ProductBLL pro
+
+@if (cars == null)
+{
+    <text>Loading...</text>
+}
+else if (cars.Count == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <table class="table table-striped" id="ProductTable">
+        <thead>
+            <tr>
+                <th>코드</th>
+                <th>공통코드1</th>
+                <th>공통코드2</th>
+                <th>가격</th>
+                <th>설명</th>
+                <th><button class="btn btn-primary" @onclick="@ShowMoal">+ 제품추가</button></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in cars)
+            {
+                <tr>
+                    <td>@car.Code</td>
+                    <td>@car.ComCode1</td>
+                    <td>@car.ComCode2</td>
+                    <td>@car.Price</td>
+                    <td>@car.Description</td>
+                    <td>
+                        <a class="btn btn-success" href="Admin/Edit/?code=@car.Code">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(@car))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<Modal OnClick="ClickHandler" @ref="EditModal" ></Modal>
+
+@code
+{
+    List<Product> cars = new List<Product>();
+    int intValue;
+    bool bModalShow = false;
+    Modal EditModal;
+    string id = "#ProductTable";
+
+
+
+    async Task Delete(Product product)
+    {
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "삭제하시겠습니까?");
+        if (confirmed)
+        {
+            pro.DeleteProduct(product);
+            cars = pro.GetProductList();
+        }
+    }
+
+    private void ShowMoal()
+    {
+        EditModal.showModal();
+    }
+
+    void ClickHandler()
+    {
+        cars = pro.GetProductList();
+    }
+
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+
+    protected override void OnInitialized()
+    {
+        cars = pro.GetProductList();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("TestDataTablesAdd", id);
+    }
+    void IDisposable.Dispose()
+    {
+        JSRuntime.InvokeVoidAsync("TestDataTablesRemove", id);
+    }
+
+}

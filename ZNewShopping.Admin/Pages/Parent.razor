@@ -1,0 +1,35 @@
+﻿@page "/Parents"
+@*<ChildComponent OnClick="ClickHandler">@ffff</ChildComponent>
+
+    <p>@message</p>
+
+    @code {
+        string ffff = "ffff";
+
+        string message = "Hello from ParentComponent";
+
+        void ClickHandler(string newMessage)
+        {
+            message = newMessage;
+        }
+
+    }*@
+
+@page "/ParentComponent"
+
+<h1>Parent-child example</h1>
+
+<ChildComponent Title="Panel Title from Parent"
+                OnClickCallback="ShowMessage">
+    Content of the child component is supplied
+    by the parent component.
+</ChildComponent>
+
+
+@code
+{
+    void ShowMessage()
+    {
+
+    }
+}
