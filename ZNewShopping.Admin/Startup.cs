@@ -10,6 +10,10 @@ using Microsoft.Extensions.Hosting;
 using SHOP.IDAL;
 using SHOP.DAL;
 using SHOP.BLL;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using ZNewShopping.Admin.Service;
 
 namespace ZNewShopping.Admin
 {
@@ -31,6 +35,8 @@ namespace ZNewShopping.Admin
 
             services.AddTransient<ProductBLL>();
             services.AddTransient<IProductDAL, ProductDAL>();
+
+            services.AddTransient<IFileUpload, FileUpload>();
 
             //blazor http ¿¡·¯....
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))

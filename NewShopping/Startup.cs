@@ -33,6 +33,8 @@ namespace NewShopping
             // Add framework services.
             services.AddMvc();
 
+            services.AddServerSideBlazor();
+
             //services.AddTransient<Com001BLL>();
             //services.AddTransient<ICom001IDAL, Com001DAL>();
 
@@ -71,6 +73,8 @@ namespace NewShopping
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=shop}/{id?}");
+
+                endpoints.MapBlazorHub();
             });
         }
     }

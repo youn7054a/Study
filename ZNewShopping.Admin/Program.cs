@@ -24,5 +24,6 @@ namespace ZNewShopping.Admin
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-    }
+
+}
 }

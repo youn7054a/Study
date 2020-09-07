@@ -3,3 +3,17 @@ NewShopping/Controllers/CheckController.cs
 ComModel/bin/Debug/netcoreapp3.1/SHOP.Model.dll
 ComModel/bin/Debug/netcoreapp3.1/SHOP.Model.dll
 SHOP.DAL/obj/Debug/netcoreapp3.1/SHOP.DAL.pdb
+ZNewShopping.Admin/bin/Debug/netcoreapp3.1/BlazorInputFile.dll
+*.dll
+*.json
+*.dll
+*.json
+*.dll
+*.pdb
+*.xml
+*.json
+ZNewShopping.Admin/obj/project.assets.json
+ZNewShopping.Admin/obj/Debug/netcoreapp3.1/ZNewShopping.Admin.Views.pdb
+ZNewShopping.Admin/obj/Debug/netcoreapp3.1/ZNewShopping.Admin.Views.pdb
+*.dll
+ZNewShopping.Admin/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/Parent.razor.g.cs
