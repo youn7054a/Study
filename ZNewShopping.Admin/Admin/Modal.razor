@@ -1,60 +1,76 @@
-﻿@using SHOP.Model
+﻿@using DataJuggler.Blazor.FileUpload
+@using SHOP.Model
+
 @inject IJSRuntime JSRuntime
 @inject SHOP.BLL.ProductBLL pro
+@using ZNewShopping.Admin.Service 
+@inject IFileUpload fileUpload
 
-    <div class="modal fade @showtag" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: @styletag;">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="closeModal">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <EditForm Model="@product">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label class="col-form-label">코드:</label>
-                            <input @bind-value="@product.Code" type="text" class="form-control" disabled>
-                            <label class="col-form-label">공통코드1 :</label>
-                            <select @onchange="setSelectBox" class="form-control" id="exampleFormControlSelect1">
-                                @foreach (var item in com1)
-                                {
-                                    <option value="@item.Code1">@item.Name</option>
-                                }
-                            </select>
-                            <label class="col-form-label">공통코드2 :</label>
-                            <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect1">
-                                @foreach (var item in com2)
-                                {
-                                    <option value="@item.Code2">@item.Name</option>
-                                }
-                            </select>
-                            <label class="col-form-label">제품이름:</label>
-                            <input @bind="@product.Name" type="text" class="form-control">
-                            <label class="col-form-label">가격:</label>
-                            <input @bind="@product.Price" type="text" class="form-control">
-                            <label class="col-form-label">설명:</label>
-                            <input @bind="@product.Description" type="text" class="form-control">
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="closeModal">Close</button>
-                        <button type="button" class="btn btn-primary" @onclick="button_onclick">Save changes</button>
-                    </div>
-                </EditForm>
+<div class="modal fade @showtag" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: @styletag;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="closeModal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <EditForm Model="@product">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="col-form-label">코드:</label>
+                        <input @bind-value="@product.Code" type="text" class="form-control" disabled>
+                        <label class="col-form-label">공통코드1 :</label>
+                        <select @onchange="setSelectBox" class="form-control" id="exampleFormControlSelect1">
+                            @foreach (var item in com1)
+                            {
+                                <option value="@item.Code1">@item.Name</option>
+                            }
+                        </select>
+                        <label class="col-form-label">공통코드2 :</label>
+                        <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect1">
+                            @foreach (var item in com2)
+                            {
+                                <option value="@item.Code2">@item.Name</option>
+                            }
+                        </select>
+                        <label class="col-form-label">제품이름:</label>
+                        <input @bind="@product.Name" type="text" class="form-control">
+                        <label class="col-form-label">가격:</label>
+                        <input @bind="@product.Price" type="text" class="form-control">
+                        <label class="col-form-label">설명:</label>
+                        <input @bind="@product.Description" type="text" class="form-control">
+                    </div>
+
+                </div>
+                <div>
+                    <InputFile OnChange="HandleFileSelected">
+
+                    </InputFile>
+                    @if (file != null)
+                    {
+                        <p>Name: @file.Name</p>
+                        <p>Size in bytes: @file.Size</p>
+                        <p>Last modified date: @file.LastModified.ToShortDateString()</p>
+                        <p>Content type (not always supplied by the browser): @file.Type</p>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="closeModal">Close</button>
+                    <button type="button" class="btn btn-primary" @onclick="button_onclick">Save changes</button>
+                </div>
+            </EditForm>
         </div>
     </div>
+</div>
 
 
 
 @code
 {
 
-    
+
     Product product = new Product();
     List<CommonCode1> com1 = new List<CommonCode1>();
     List<CommonCode2> com2 = new List<CommonCode2>();
@@ -65,6 +81,8 @@
 
     string showtag = "";
     string styletag = "none";
+
+    IFileListEntry file;
 
     [Parameter] public EventCallback<string> OnClick { get; set; }
 
@@ -104,6 +122,15 @@
         com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
         product.ComCode1 = com1.First().Code1;
         product.ComCode2 = com2.First().Code1;
+    }
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        file = files.FirstOrDefault();
+        
+        if(file != null)
+        {
+            await fileUpload.UploadAsync(file);
+        }
     }
 
 }
