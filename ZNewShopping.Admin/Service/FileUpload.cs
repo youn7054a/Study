@@ -17,15 +17,26 @@ namespace ZNewShopping.Admin.Service
             _environment = environment;
         }
         
-        public async Task UploadAsync(IFileListEntry fileEntry, int code)
+        public async Task UploadAsync(IFileListEntry fileEntry)
         {
-            var path = Path.Combine(_environment.ContentRootPath, "Upload", code);
-            var ms = new MemoryStream();
-            await fileEntry.Data.CopyToAsync(ms);
-            using (FileStream file = new FileStream(path, FileMode.Create, FileAccess.Write))
+            try
             {
-                ms.WriteTo(file);
+                //var path = Path.Combine(_environment.ContentRootPath, "Upload");
+                var path = Path.Combine(@"3.34.209.209", "file");
+                var ms = new MemoryStream();
+                await fileEntry.Data.CopyToAsync(ms);
+                using (FileStream file = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    ms.WriteTo(file);
+                }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+
         }
+
     }
 }

@@ -11,18 +11,23 @@
 
         <div class="col-sm-4">
             <div class="product-image-wrapper">
-                <div class="single-products" onclick="location.href='@Url.Action("ShopDetail", "Home", new { code = @fields["Code"]})'">
-                        <div class="productinfo text-center" onclick="">
-                            <img src="~/Images/home/Hammer1.jpg" alt="" />
-                            <h2>\@fields["Price"]</h2>
-                            <p>@fields["Name"]</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                        </div>
+                <div class="single-products" onclick="location.href='@Url.Action("ShopDetail", "Home", new { code = @fields["Code"] })'">
+                    <div class="productinfo text-center" onclick="">
+                        @{ 
+                            string filName = fields["Code"].ToString() + ".jpg";
+                            <img src="http://3.34.209.209:8000/imagefiles/@filName" onerror="this.src='http://3.34.209.209:8000/imagefiles/unnamed.jpg'"
+
+alt="" />
+                        }
+                        <h2>\@fields["Price"]</h2>
+                        <p>@fields["Name"]</p>
+                        @*<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
+                    </div>
                     <div class="product-overlay">
                         <div class="overlay-content">
-                            <h2>$56</h2>
-                            <p>메롱</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <h2>\@fields["Price"]</h2>
+                            <p>@fields["Name"]</p>
+                            @*<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
                         </div>
                     </div>
                 </div>

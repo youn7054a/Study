@@ -9,21 +9,22 @@
 {
     <text>Loading...</text>
 }
-else if (cars.Count == 0)
+@*else if (cars.Count == 0)
 {
     <text>No Records Found.</text>
-}
+}*@
 else
 {
     <table class="table table-striped" id="ProductTable">
         <thead>
             <tr>
                 <th>코드</th>
+                <th>이름</th>
                 <th>공통코드1</th>
                 <th>공통코드2</th>
                 <th>가격</th>
                 <th>설명</th>
-                <th><button class="btn btn-primary" @onclick="@ShowMoal">+ 제품추가</button></th>
+                <th><button class="btn btn-primary" @onclick="@(() => showModal())">+ 제품추가</button></th>
             </tr>
         </thead>
         <tbody>
@@ -31,12 +32,14 @@ else
             {
                 <tr>
                     <td>@car.Code</td>
+                    <td>@car.Name</td>
                     <td>@car.ComCode1</td>
                     <td>@car.ComCode2</td>
                     <td>@car.Price</td>
                     <td>@car.Description</td>
                     <td>
-                        <a class="btn btn-success" href="Admin/Edit/?code=@car.Code">Edit</a>
+                        @*<a class="btn btn-success" href="Admin/Edit/?code=@pro">Edit</a>*@
+                        <button class="btn btn-success" @onclick="@(() => showModal(@car.Code))">Edit</button>
                         <button class="btn btn-danger" @onclick="@(() => Delete(@car))">Delete</button>
                     </td>
                 </tr>
@@ -45,17 +48,16 @@ else
     </table>
 }
 
-<Modal OnClick="ClickHandler" @ref="EditModal" ></Modal>
+<Modal OnClick="ClickHandler" @ref="EditModal" isCreate="@isCreate"></Modal>
 
 @code
 {
+
     List<Product> cars = new List<Product>();
     int intValue;
-    bool bModalShow = false;
     Modal EditModal;
     string id = "#ProductTable";
-
-
+    string isCreate;
 
     async Task Delete(Product product)
     {
@@ -67,9 +69,13 @@ else
         }
     }
 
-    private void ShowMoal()
+    private void showModal(int code = 0)
     {
-        EditModal.showModal();
+        if (code == 0)
+            isCreate = "C";
+        else
+            isCreate = "U";
+        EditModal.showModal(code);
     }
 
     void ClickHandler()

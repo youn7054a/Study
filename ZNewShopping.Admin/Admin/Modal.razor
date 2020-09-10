@@ -1,10 +1,13 @@
-﻿@using DataJuggler.Blazor.FileUpload
-@using SHOP.Model
+﻿@using SHOP.Model
+@using ZNewShopping.Admin.Service <!--미사용API로 변경-->
 
+@using System.IO;
+@using Tewr.Blazor.FileReader
+
+@inject ProductBLL pro
 @inject IJSRuntime JSRuntime
-@inject SHOP.BLL.ProductBLL pro
-@using ZNewShopping.Admin.Service 
-@inject IFileUpload fileUpload
+@inject IFileReaderService fileReader
+@inject HttpClient client
 
 <div class="modal fade @showtag" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: @styletag;">
     <div class="modal-dialog" role="document">
@@ -16,11 +19,14 @@
                 </button>
             </div>
             <EditForm Model="@product">
+                <DataAnnotationsValidator />
+                @*<ValidationSummary />*@
                 <div class="modal-body">
 
                     <div class="form-group">
                         <label class="col-form-label">코드:</label>
-                        <input @bind-value="@product.Code" type="text" class="form-control" disabled>
+                        <input @bind-value="@product.Code" type="text" class="form-control" disabled="@isDisabled">
+                        <ValidationMessage For="@(() => @product.Code)" />
                         <label class="col-form-label">공통코드1 :</label>
                         <select @onchange="setSelectBox" class="form-control" id="exampleFormControlSelect1">
                             @foreach (var item in com1)
@@ -28,48 +34,72 @@
                                 <option value="@item.Code1">@item.Name</option>
                             }
                         </select>
+                        <ValidationMessage For="@(() => @product.ComCode1)" />
                         <label class="col-form-label">공통코드2 :</label>
-                        <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect1">
+                        <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect2">
                             @foreach (var item in com2)
                             {
                                 <option value="@item.Code2">@item.Name</option>
                             }
                         </select>
+                        <ValidationMessage For="@(() => @product.ComCode2)" />
                         <label class="col-form-label">제품이름:</label>
-                        <input @bind="@product.Name" type="text" class="form-control">
+                        <input @bind-value="@product.Name" type="text" class="form-control">
+                        <ValidationMessage For="@(() => @product.Name)" />
                         <label class="col-form-label">가격:</label>
-                        <input @bind="@product.Price" type="text" class="form-control">
+                        <input @bind-value="@product.Price" type="text" class="form-control">
+                        <ValidationMessage For="@(() => @product.Price)" />
                         <label class="col-form-label">설명:</label>
-                        <input @bind="@product.Description" type="text" class="form-control">
+                        <input @bind-value="@product.Description" type="text" class="form-control">
+                        <ValidationMessage For="@(() => @product.Description)" />
                     </div>
 
                 </div>
-                <div>
-                    <InputFile OnChange="HandleFileSelected">
+                <div class="form-group">
+                    <div class="row">
+                        <div>
+                            <div class="form-group">
+                                <input type="file" @ref="inputReference" @onchange="async () => await OpenFileAsync()" />
+                                @if (@isFileInfoShow)
+                                {
+                                    <ul>
+                                        <li>File Name: @fileName</li>
+                                        <li>Size: @size</li>
+                                        <li>Type: @type</li>
+                                    </ul>
+                                }
+                            </div>
+                            <button class="btn btn-block btn-success" @onclick="async () => await UploadFileAsync()">Upload File</button>
 
-                    </InputFile>
-                    @if (file != null)
-                    {
-                        <p>Name: @file.Name</p>
-                        <p>Size in bytes: @file.Size</p>
-                        <p>Last modified date: @file.LastModified.ToShortDateString()</p>
-                        <p>Content type (not always supplied by the browser): @file.Type</p>
-                    }
+
+                            @if (!string.IsNullOrWhiteSpace(message) && @isFileInfoShow)
+                            {
+                                <div class="alert alert-success">
+                                    File has been uploaded
+                                </div>
+                            }
+                        </div>
+                        <div>
+                            @if (imagePath != null && @isFileInfoShow)
+                            {
+                                <img style="width:150px" src="@imagePath" />
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="closeModal">Close</button>
-                    <button type="button" class="btn btn-primary" @onclick="button_onclick">Save changes</button>
+                    <button type="submit" class="btn btn-primary" @onclick="button_onclick">Save changes</button>
                 </div>
             </EditForm>
         </div>
     </div>
 </div>
 
-
-
 @code
 {
-
+    [Parameter]
+    public string isCreate { get; set; }
 
     Product product = new Product();
     List<CommonCode1> com1 = new List<CommonCode1>();
@@ -81,22 +111,57 @@
 
     string showtag = "";
     string styletag = "none";
+    string isDisabled = "true";
+
+    bool isFileInfoShow = false;
 
     IFileListEntry file;
 
     [Parameter] public EventCallback<string> OnClick { get; set; }
 
 
-    private void button_onclick()
+    ElementReference inputReference;
+    string message = string.Empty;
+    string imagePath = null;
+
+    string fileName = string.Empty;
+    string fileExtension = string.Empty;
+    string type = string.Empty;
+    string size = string.Empty;
+
+    Stream fileStream = null;
+
+
+    private async Task button_onclick()
     {
-        pro.CreateProduct(product);
+        if(isCreate == "C")
+            pro.CreateProduct(product);
+        else
+        {
+            pro.UpdateProduct(product);
+        }
+
+        await OnClick.InvokeAsync("");
+
+        if (fileStream != null)
+            await UploadFileAsync();
+
         product = new Product();
-        OnClick.InvokeAsync("");
         closeModal();
     }
 
-    public void showModal()
+    public void showModal(int code)
     {
+
+        //초기화 값지정
+        com1 = pro.GetCom1List();
+        com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
+        product.ComCode1 = com1.First().Code1;
+        product.ComCode2 = com2.First().Code2;
+
+        if(code != 0)
+            product = pro.GetProductList().FirstOrDefault(c =>c.Code == code);
+
         showtag = "show";
         styletag = "block";
         StateHasChanged();
@@ -121,15 +186,63 @@
         com1 = pro.GetCom1List();
         com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
         product.ComCode1 = com1.First().Code1;
-        product.ComCode2 = com2.First().Code1;
+        product.ComCode2 = com2.First().Code2;
+
+        if (isCreate == "C")
+            isDisabled = "false";
     }
-    async Task HandleFileSelected(IFileListEntry[] files)
+
+    async Task OpenFileAsync()
     {
-        file = files.FirstOrDefault();
-        
-        if(file != null)
+        // Read the files
+        var file = (await fileReader.CreateReference(inputReference).EnumerateFilesAsync()).FirstOrDefault();
+
+        if (file == null)
+            return;
+
+        isFileInfoShow = true;
+
+        // Get the info of that files
+        var fileInfo = await file.ReadFileInfoAsync();
+        fileName = fileInfo.Name;
+        size = $"{fileInfo.Size}b";
+        type = fileInfo.Type;
+
+        using (var ms = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
         {
-            await fileUpload.UploadAsync(file);
+            fileStream = new MemoryStream(ms.ToArray());
+        }
+    }
+
+    async Task UploadFileAsync()
+    {
+
+        // Create the content
+        var file = new MultipartFormDataContent();
+        file.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data");
+
+
+        string extension = Path.GetExtension(fileName);
+        fileName = product.Code + extension;
+
+        file.Add(new StreamContent(fileStream, (int)fileStream.Length), "image", fileName);//파라미터지정
+
+        string url = "http://3.34.209.209:8000";
+        //string url = "https://localhost:44309";
+
+        var response = await client.PostAsync($"{url}/api/upload", file);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var uploadedFileName = await response.Content.ReadAsStringAsync();
+            imagePath = $"{url}/imageFiles/{uploadedFileName}";
+            message = "File has been uploaded successfully!";
+            file = null;
+            isFileInfoShow = false;
+        }
+        else
+        {
+            message = "File has been filed";
         }
     }
 

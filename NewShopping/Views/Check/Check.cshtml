@@ -15,16 +15,16 @@
                         <div class="bill-to">
                             <p>배송정보</p>
                             <div class="form-one">
-                                <input type="email" placeholder="이름" asp-for="ShipInfo.Name" />
-                                <input type="email" placeholder="주소" asp-for="ShipInfo.Address" />
-                                <input type="email" placeholder="세부사항" asp-for="ShipInfo.Detail" />
+                                <input type="text" placeholder="이름" asp-for="ShipInfo.Name" required/>
+                                <input type="text" placeholder="주소" asp-for="ShipInfo.Address" required/>
+                                <input type="text" placeholder="세부사항" asp-for="ShipInfo.Detail" required/>
                                 <button class="btn btn-primary" type="button" onclick="searchZip()">우편번호찾기</button>
                             </div>
                             <div class="form-two">
                                 @*@Html.TextBoxFor(m => m.Zipcode, new { placeholder = "우편번호" })*@
-                                <input type="email" placeholder="우편번호" asp-for="ShipInfo.Zipcode" />
-                                <input type="email" placeholder="전화번호1" asp-for="ShipInfo.Phone1" />
-                                <input type="email" placeholder="전화번호2" asp-for="ShipInfo.Phone2" />
+                                <input type="text" placeholder="우편번호" asp-for="ShipInfo.Zipcode" required/>
+                                <input type="tel" pattern="[0-9]{11}" placeholder="전화번호1(-없이)" asp-for="ShipInfo.Phone1" required/>
+                                <input type="tel" pattern="[0-9]{11}" placeholder="전화번호2(-없이)" asp-for="ShipInfo.Phone2" />
                                 <span>
                                     <label><input type="checkbox" onclick="getInfo()"> 기존 정보 가져오기</label>
                                 </span>
@@ -97,7 +97,7 @@
                 <span>
                     <label><input type="checkbox"> 카카오페이</label>
                 </span>
-                <button class="btn btn-primary" type="button" style="float:right">주문완료 및 결제하기</button>
+                <button class="btn btn-primary" type="submit" style="float:right">주문완료 및 결제하기</button>
             </div>
         </div>
     </section> <!--/#cart_items-->
@@ -111,8 +111,8 @@
             oncomplete: function (data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
                 // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-                $('#Address').val(data.address);
-                $('#Zipcode').val(data.zonecode);
+                $('#ShipInfo_Address').val(data.address);
+                $('#ShipInfo_Zipcode').val(data.zonecode);
             }
         }).open();
     }

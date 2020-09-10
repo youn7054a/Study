@@ -41,6 +41,7 @@ namespace ZNewShopping.Controllers
                 if (user == null)
                 {
                     ModelState.AddModelError("LoginError", "사용자 ID 혹은 비밀번호가 올바르지 않습니다.");
+
                 }
                 else
                 {
@@ -60,12 +61,25 @@ namespace ZNewShopping.Controllers
         [HttpPost]
         public IActionResult Resister(User model)
         {
+            
             using (var db = new ShopDBContext())
             {
-                db.Add(model);
-                db.SaveChanges();
+                var user = db.Users.FirstOrDefault(u => u.UserID.Equals(model.UserID));
+
+                if (user != null)
+                {
+                    ModelState.AddModelError("SignError", "이미 등록되있는 아이디입니다.");
+                    return View();
+                }
+                else
+                {
+                    db.Add(model);
+                    db.SaveChanges();
+                    return RedirectToAction("Shop", "Home");
+
+                }
             }
-            return RedirectToAction("Shop", "Home");
+
         }
 
 

@@ -9,11 +9,17 @@ namespace SHOP.Model
     public partial class Product
     {
         [Key]
+        [Required(ErrorMessage = "Code is required")]
         public int Code { get; set; }
+        [Required(ErrorMessage = "Code is required")]
         public string ComCode1 { get; set; }
+        [Required(ErrorMessage = "ComCode1 is required")]
         public string ComCode2 { get; set; }
+        [Required(ErrorMessage = "ComCode2 is required")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "Name is required")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; set; }
 
         public virtual ICollection<Cart> Carts { get; set; }

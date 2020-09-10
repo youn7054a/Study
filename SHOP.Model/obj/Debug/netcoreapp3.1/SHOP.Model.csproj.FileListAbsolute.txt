@@ -44,3 +44,4 @@ D:\Git\Study\SHOP.Model\obj\Debug\netcoreapp3.1\SHOP.Model.csproj.CoreCompileInp
 D:\Git\Study\SHOP.Model\obj\Debug\netcoreapp3.1\SHOP.Model.dll
 D:\Git\Study\SHOP.Model\obj\Debug\netcoreapp3.1\SHOP.Model.pdb
 D:\Git\Study\SHOP.Model\obj\Debug\netcoreapp3.1\SHOP.Model.genruntimeconfig.cache
+D:\Git\Study\SHOP.Model\obj\Debug\netcoreapp3.1\SHOP.Model.csprojAssemblyReference.cache

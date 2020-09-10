@@ -44,7 +44,7 @@
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
                                 @*<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                    <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>*@
+                                  <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>*@
                                 <li><a href="~/Check/Check"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="~/Cart/Cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 <li><a href="" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-apple"></i> LoginModal</a></li>
@@ -54,7 +54,8 @@
 
                                     if (bLogin == false)
                                     {
-                                        <li><a href="~/Login/Login/?controller=@controller&action=@action"><i class="fa fa-lock"></i> Login</a></li>
+                                        <li><a href="~/Login/Login/?controller"><i class="fa fa-lock"></i> Login</a></li>
+                                        <li><a href="~/Login/Resister"><i class="fa fa-copy"></i> Sign</a></li>
                                     }
                                     else
                                     {
@@ -133,18 +134,16 @@
                         </div>
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="index-2.html">Home</a></li>
+                                <li><a href="~/Home/Shop">Home</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="active">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html" class="active">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="login.html">Login</a></li>
+                                        <li><a href="~/Home/Shop" class="active">Products</a></li>
+                                        <li><a href="~/Check/Check">Checkout</a></li>
+                                        <li><a href="~/Cart/Cart">Cart</a></li>
                                     </ul>
                                 </li>
-                                <li class="dropdown">
+                                @*<li class="dropdown">
                                     <a href="#">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="blog.html">Blog List</a></li>
@@ -152,7 +151,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="404.html">404</a></li>
-                                <li><a href="contact-us.html">Contact</a></li>
+                                <li><a href="contact-us.html">Contact</a></li>*@
                             </ul>
                         </div>
                     </div>
@@ -426,9 +425,10 @@
     <script src="~/js/price-range.js"></script>
     <script src="~/js/jquery.scrollUp.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/js/jquery.prettyPhoto.js"></script>
     <script src="~/js/main.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script src="_framework/blazor.server.js"></script>
+<script src="_framework/blazor.server.js"></script><!--blozor-->

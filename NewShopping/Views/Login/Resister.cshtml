@@ -10,10 +10,11 @@
                     <!--sign up form-->
                     <h2>New User Signup!</h2>
                     <form method="post" asp-controller="Login" asp-action="Resister">
-                        <input type="text" placeholder="Name" asp-for="Name" />
-                        <input type="email" placeholder="Email Address" asp-for="UserID" />
-                        <input id="password1" type="password" placeholder="Password" asp-for="Password" />
-                        <input id="password2" type="password" placeholder="Password" onfocusout="chkPW()" />
+                        @Html.ValidationMessage("SignError", new { @style = "color:red" })
+                        <input type="text" placeholder="Name" asp-for="Name" required/>
+                        <input type="email" placeholder="Email Address" asp-for="UserID" required/>
+                        <input id="password1" type="password" placeholder="Password" asp-for="Password" required/>
+                        <input id="password2" type="password" placeholder="Password" onfocusout="chkPW()" required/>
                         <button type="submit" class="btn btn-default">Signup</button>
                     </form>
                 </div><!--/sign up form-->
@@ -21,3 +22,21 @@
         </div>
     </div>
 </section><!--/form-->
+
+<script type="text/javascript">
+
+    //$(function () {
+    //    $("#SignForm").validate();
+    //});
+
+    function chkPW() {
+        var pass1 = document.querySelector("#password1").value;
+        var pass2 = document.querySelector("#password2").value;
+
+        if (pass1 != pass2) {
+            alert("동일한 비밀번호를 입력해주세요");
+            pass2.value = "";
+            pass2.focus();
+        }
+    }
+</script>

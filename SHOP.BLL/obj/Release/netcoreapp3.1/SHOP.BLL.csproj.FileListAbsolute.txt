@@ -12,3 +12,5 @@ D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.csproj.CoreCompileInput
 D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.csproj.CopyComplete
 D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.dll
 D:\Git\Study\SHOP.BLL\obj\Release\netcoreapp3.1\SHOP.BLL.pdb
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.IDAL.dll
+D:\Git\Study\SHOP.BLL\bin\Release\netcoreapp3.1\SHOP.IDAL.pdb

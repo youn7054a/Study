@@ -14,6 +14,7 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using ZNewShopping.Admin.Service;
+using Tewr.Blazor.FileReader;
 
 namespace ZNewShopping.Admin
 {
@@ -37,6 +38,12 @@ namespace ZNewShopping.Admin
             services.AddTransient<IProductDAL, ProductDAL>();
 
             services.AddTransient<IFileUpload, FileUpload>();
+
+            //services.AddTransient<IFileReaderService>();
+
+            services.AddFileReaderService();
+
+
 
             //blazor http ¿¡·¯....
             if (!services.Any(x => x.ServiceType == typeof(HttpClient)))
