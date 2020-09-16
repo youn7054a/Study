@@ -8,7 +8,11 @@ namespace SHOP.Model
     public partial class CommonCode1
     {
         [Key]
-        public string Code1 { get; set; }
-        public string Name { get; set; }
+        public string Com1Code1 { get; set; }
+        public string Com1Name { get; set; }
+
+        public virtual ICollection<Product> products { get; set; }
+
+
     }
 }

@@ -44,14 +44,14 @@
 
         var mainFields = rows as IDictionary<string, object>;
 
-        mainTree = mainFields["CODE1"].ToString();
+        mainTree = mainFields["Com1Code1"].ToString();
 
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a data-toggle="collapse" data-parent="#accordian" href="#@mainTree">
                         <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                        @mainFields["NAME"]
+                        @mainFields["Com1Name"]
                     </a>
                 </h4>
             </div>
@@ -62,10 +62,10 @@
                         {
                             var subFields = rows2 as IDictionary<string, object>;
 
-                            if (mainFields["CODE1"].ToString() == subFields["CODE1"].ToString())
+                            if (mainFields["Com1Code1"].ToString() == subFields["Com1Code1"].ToString())
                             {
                                 //<li><a href="~/Home/Shop/?page=1&code1=@subFields["CODE1"]&code2=@subFields["CODE2"]">@subFields["NAME"]</a></li>
-                                <li><a asp-controller="Home" asp-action="Shop" asp-route-code1="@subFields["CODE1"]" asp-route-code2="@subFields["CODE2"]">@subFields["NAME"]</a></li>
+                                <li><a asp-controller="Home" asp-action="Shop" asp-route-code1="@subFields["Com1Code1"]" asp-route-code2="@subFields["Com2Code2"]">@subFields["Com2Name"]</a></li>
                             }
                         }
                     </ul>

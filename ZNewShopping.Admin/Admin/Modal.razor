@@ -19,39 +19,32 @@
                 </button>
             </div>
             <EditForm Model="@product">
-                <DataAnnotationsValidator />
                 @*<ValidationSummary />*@
                 <div class="modal-body">
 
                     <div class="form-group">
                         <label class="col-form-label">코드:</label>
                         <input @bind-value="@product.Code" type="text" class="form-control" disabled="@isDisabled">
-                        <ValidationMessage For="@(() => @product.Code)" />
                         <label class="col-form-label">공통코드1 :</label>
                         <select @onchange="setSelectBox" class="form-control" id="exampleFormControlSelect1">
                             @foreach (var item in com1)
                             {
-                                <option value="@item.Code1">@item.Name</option>
+                                <option value="@item.Com1Code1">@item.Com1Name</option>
                             }
                         </select>
-                        <ValidationMessage For="@(() => @product.ComCode1)" />
                         <label class="col-form-label">공통코드2 :</label>
-                        <select @bind="@product.ComCode2" class="form-control" id="exampleFormControlSelect2">
+                        <select @bind="@product.Com2Code2" class="form-control" id="exampleFormControlSelect2">
                             @foreach (var item in com2)
                             {
-                                <option value="@item.Code2">@item.Name</option>
+                                <option value="@item.Com2Code2">@item.Com2Name</option>
                             }
                         </select>
-                        <ValidationMessage For="@(() => @product.ComCode2)" />
                         <label class="col-form-label">제품이름:</label>
                         <input @bind-value="@product.Name" type="text" class="form-control">
-                        <ValidationMessage For="@(() => @product.Name)" />
                         <label class="col-form-label">가격:</label>
                         <input @bind-value="@product.Price" type="text" class="form-control">
-                        <ValidationMessage For="@(() => @product.Price)" />
                         <label class="col-form-label">설명:</label>
                         <input @bind-value="@product.Description" type="text" class="form-control">
-                        <ValidationMessage For="@(() => @product.Description)" />
                     </div>
 
                 </div>
@@ -155,9 +148,9 @@
 
         //초기화 값지정
         com1 = pro.GetCom1List();
-        com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
-        product.ComCode1 = com1.First().Code1;
-        product.ComCode2 = com2.First().Code2;
+        com2 = pro.GetCom2List(com1.FirstOrDefault().Com1Code1);
+        product.Com1Code1 = com1.First().Com1Code1;
+        product.Com2Code2 = com2.First().Com2Code2;
 
         if(code != 0)
             product = pro.GetProductList().FirstOrDefault(c =>c.Code == code);
@@ -177,16 +170,16 @@
     public void setSelectBox(ChangeEventArgs e)
     {
 
-        product.ComCode1 = e.Value.ToString();
+        product.Com1Code1 = e.Value.ToString();
         com2 = pro.GetCom2List(e.Value.ToString());
     }
 
     protected override void OnInitialized()
     {
         com1 = pro.GetCom1List();
-        com2 = pro.GetCom2List(com1.FirstOrDefault().Code1);
-        product.ComCode1 = com1.First().Code1;
-        product.ComCode2 = com2.First().Code2;
+        com2 = pro.GetCom2List(com1.FirstOrDefault().Com1Code1);
+        product.Com1Code1 = com1.First().Com1Code1;
+        product.Com2Code2 = com2.First().Com2Code2;
 
         if (isCreate == "C")
             isDisabled = "false";

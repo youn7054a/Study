@@ -10,10 +10,12 @@ namespace SHOP.Model
     {
         [Key]
         [Column(Order =1)]
-        public string Code1 { get; set; }
+        public string Com1Code1 { get; set; }
         [Key]
         [Column(Order = 2)]
-        public string Code2 { get; set; }
-        public string Name { get; set; }
+        public string Com2Code2 { get; set; }
+        public string Com2Name { get; set; }
+
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

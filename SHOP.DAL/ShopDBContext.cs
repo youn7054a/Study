@@ -30,8 +30,8 @@ namespace SHOP.DAL
             modelBuilder.Entity<CommonCode2>()
                     .HasKey(pc => new
                     {
-                        pc.Code1,
-                        pc.Code2
+                        pc.Com1Code1,
+                        pc.Com2Code2
                     });
 
             modelBuilder.Entity<Cart>()

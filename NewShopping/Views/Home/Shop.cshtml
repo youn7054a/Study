@@ -15,9 +15,7 @@
                     <div class="productinfo text-center" onclick="">
                         @{ 
                             string filName = fields["Code"].ToString() + ".jpg";
-                            <img src="http://3.34.209.209:8000/imagefiles/@filName" onerror="this.src='http://3.34.209.209:8000/imagefiles/unnamed.jpg'"
-
-alt="" />
+                            <img src="http://3.34.209.209:8000/imagefiles/@filName" onerror="this.src='http://3.34.209.209:8000/imagefiles/unnamed.jpg'"/>
                         }
                         <h2>\@fields["Price"]</h2>
                         <p>@fields["Name"]</p>

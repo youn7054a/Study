@@ -3,23 +3,29 @@ using SHOP.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SHOP.Model
 {
     public partial class Product
     {
         [Key]
-        [Required(ErrorMessage = "Code is required")]
+        [Required ]
         public int Code { get; set; }
-        [Required(ErrorMessage = "Code is required")]
-        public string ComCode1 { get; set; }
-        [Required(ErrorMessage = "ComCode1 is required")]
-        public string ComCode2 { get; set; }
-        [Required(ErrorMessage = "ComCode2 is required")]
+
+        public string Com1Code1 { get; set; }
+
+        [ForeignKey("Com1Code1")]//include join key여야지 가능한듯...
+        public virtual CommonCode1 CommonCode1 { get; set; }
+
+        public string Com2Code2 { get; set; }
+        
+        [ForeignKey("Com1Code1, Com2Code2")]
+        public virtual CommonCode2 CommonCode2 { get; set; }
+
+        [Required]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Name is required")]
         public string Description { get; set; }
-        [Required(ErrorMessage = "Price is required")]
         public decimal Price { get; set; }
 
         public virtual ICollection<Cart> Carts { get; set; }

@@ -112,3 +112,5 @@ D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\staticwebassets\ZNewSh
 D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\ZNewShopping.Admin.dll
 D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\ZNewShopping.Admin.pdb
 D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\ZNewShopping.Admin.genruntimeconfig.cache
+D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\RazorDeclaration\Admin\Index2.razor.g.cs
+D:\Git\Study\ZNewShopping.Admin\obj\Release\netcoreapp3.1\Razor\Admin\Index2.razor.g.cs

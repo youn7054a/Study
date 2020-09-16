@@ -5,6 +5,8 @@
 @implements IDisposable
 @inject ProductBLL pro
 
+
+
 @if (cars == null)
 {
     <text>Loading...</text>
@@ -33,8 +35,8 @@ else
                 <tr>
                     <td>@car.Code</td>
                     <td>@car.Name</td>
-                    <td>@car.ComCode1</td>
-                    <td>@car.ComCode2</td>
+                    <td>@car.Com1Code1</td>
+                    <td>@car.Com2Code2</td>
                     <td>@car.Price</td>
                     <td>@car.Description</td>
                     <td>

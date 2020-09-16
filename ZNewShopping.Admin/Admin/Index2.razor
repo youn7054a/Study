@@ -1,0 +1,257 @@
+﻿@page "/Admin/Index2"
+
+@using MatBlazor
+@using System.IO;
+@using Tewr.Blazor.FileReader
+
+@inject ProductBLL pro
+@inject IJSRuntime JSRuntime
+
+@inject IFileReaderService fileReader
+@inject HttpClient client
+
+
+
+<MatButton OnClick="@OpenDialog" Raised="true">상품추가</MatButton>
+
+<MatDialog @bind-IsOpen="@dialogIsOpen" >
+    <EditForm Model="product" OnValidSubmit="@OkClick">
+        <DataAnnotationsValidator />
+        <MatDialogTitle>상품 등록/수정</MatDialogTitle>
+        <MatDialogContent>
+            <tr>
+                <MatTextField Label="코드" @bind-Value="@product.Code" Disabled="true"></MatTextField>
+            </tr>
+            <tr>
+                <MatTextField Label="제품이름" @bind-Value="@product.Name"></MatTextField>
+                <ValidationMessage For="@(() => product.Name)" />
+            </tr>
+            <tr>
+                <MatSelect Label="코드1" Value="@product.Com1Code1" ValueExpression="@(() => product.Com1Code1)" ValueChanged="(string i) => OnChangeCategory(i)">
+                    <MatOptionString></MatOptionString>
+                    @foreach (var item in com1)
+                    {
+                        <MatOptionString Value="@item.Com1Code1">@item.Com1Name</MatOptionString>
+                    }
+                </MatSelect>
+                <ValidationMessage For="@(() => product.Com1Code1)" />
+            </tr>
+            <tr>
+                <MatSelect Label="코드2" @bind-Value="@product.Com2Code2">
+                    <MatOptionString></MatOptionString>
+                    @foreach (var item in com2)
+                    {
+                        <MatOptionString Value="@item.Com2Code2">@item.Com2Name</MatOptionString>
+                    }
+                </MatSelect>
+                <ValidationMessage For="@(() => product.Com2Code2)" />
+            </tr>
+            <tr>
+                <MatTextField Label="가격" Id="txtprice" @bind-Value="@product.Price" @onchange="SetComma"></MatTextField>
+                <ValidationMessage For="@(() => product.Price)" />
+            </tr>
+            <tr>
+                <MatTextField Label="설명" @bind-Value="@product.Description"></MatTextField>
+                <ValidationMessage For="@(() => product.Description)" />
+            </tr>
+            <input type="file" @ref="inputReference" @onchange="async () => await OpenFileAsync()" />
+            <div><img style="width:150px" src="@imagePath" /></div>
+            <div>@message</div>
+            @*<MatFileUpload OnChange="@MultipleFilesReady" AllowMultiple="false" Label="Drop files here or Browse"></MatFileUpload>모르겠다 ㅜㅜ*@
+
+            @foreach (var f in multiplelist)
+            {
+                <div>@f</div>
+            }
+        </MatDialogContent>
+        <MatDialogActions>
+            <MatButton OnClick="@(e => { dialogIsOpen = false; })">Close</MatButton>
+            <MatButton Type="submit">OK</MatButton>
+        </MatDialogActions>
+    </EditForm>
+</MatDialog>
+
+
+<MatTable Items="@products" class="mat-elevation-z5">
+    <MatTableHeader>
+        <th style="width:10%">사진</th>
+        <th style="width:10%">코드</th>
+        <th style="width:15%">이름</th>
+        <th style="width:10%">코드1</th>
+        <th style="width:10%">코드2</th>
+        <th style="width:15%">가격</th>
+        <th style="width:auto">설명</th>
+        <th style="width:auto"></th>
+    </MatTableHeader>
+    <MatTableRow>
+        @*<td>@String.Format("{0:d}", @context.Code)</td>*@
+        <td style="width:10%"><img style="width:150px" src="@($"{url}/imageFiles/{context.Code}.jpg")" /></td>
+        <td style="width:10%">@context.Code</td>
+        <td style="width:15%">@context.Name</td>
+        <td style="width:10%">@context.CommonCode1.Com1Name</td>
+        <td style="width:10%">@context.CommonCode2.Com2Name</td>
+        <td style="width:15%">@context.Price</td>
+        <td style="width:auto">@context.Description</td>
+        <td style="width:auto">
+            <button class="btn btn-success" @onclick="@(() => OpenUpDateDialog(context))">Edit</button>
+            <button class="btn btn-danger" @onclick="@(() => DeleteProduct(context))">Delete</button>
+        </td>
+    </MatTableRow>
+</MatTable>
+
+@code
+{
+
+
+#if DEBUG
+    string url = "https://localhost:44309";
+#else
+    string url = "http://3.34.209.209:8000";
+#endif
+
+    List<Product> products = new List<Product>();
+    List<CommonCode1> com1 = new List<CommonCode1>();
+    List<CommonCode2> com2 = new List<CommonCode2>();
+
+    Product product = new Product();
+
+    bool dialogIsOpen = false;
+
+    List<string> multiplelist = new List<string>();
+
+    ElementReference inputReference;
+    string message = string.Empty;
+    string imagePath = string.Empty;
+
+    string fileName = string.Empty;
+    string fileExtension = string.Empty;
+    string type = string.Empty;
+    string size = string.Empty;
+
+    Stream fileStream = null;
+
+    protected string SetCombo => product.Com1Code1;
+
+    public void SetSelectBox(ChangeEventArgs e)
+    {
+        product.Com1Code1 = e.Value.ToString();
+        com2 = pro.GetCom2List(e.Value.ToString());
+    }
+
+   
+
+    void OpenDialog()
+    {
+        imagePath = $"{url}/imageFiles/{product.Code}.jpg";
+        product = new Product();//객체 초기화
+        dialogIsOpen = true;
+    }
+
+    void OpenUpDateDialog(Product prod)
+    {
+
+        imagePath = $"{url}/imageFiles/{prod.Code}.jpg";
+        product = prod;
+        OnChangeCategory(product.Com1Code1);
+        dialogIsOpen = true;
+    }
+
+    async Task OkClick()
+    {
+
+        if (product.Code == 0)
+            pro.CreateProduct(product);
+        else
+            pro.UpdateProduct(product);
+
+        await UploadFileAsync();
+
+        products = pro.GetProductList();
+        dialogIsOpen = false;
+    }
+
+    void DeleteProduct(Product prod)
+    {
+        pro.DeleteProduct(prod);
+        products = pro.GetProductList();
+    }
+
+    async Task SetComma()
+    {
+
+        //string id = price.Id;
+
+        //product.Price= await JSRuntime.InvokeAsync<decimal>("TestDataTablesRemove", id);
+
+    }
+
+
+
+    //matblazor는 이벤트 핸들러 처리가 않됨
+    protected async Task OnChangeCategory(string code)
+    {
+        product.Com1Code1 = code;
+        com2 = pro.GetCom2List(product.Com1Code1);
+    }
+
+    protected override void OnInitialized()
+    {
+        products = pro.GetProductList();
+        com1 = pro.GetCom1List();
+        com2 = pro.GetCom2List(com1.First().Com1Code1);
+
+    }
+
+
+    async Task OpenFileAsync()
+    {
+        // Read the files
+        var file = (await fileReader.CreateReference(inputReference).EnumerateFilesAsync()).FirstOrDefault();
+
+        if (file == null)
+            return;
+
+        // Get the info of that files
+        var fileInfo = await file.ReadFileInfoAsync();
+        fileName = fileInfo.Name;
+        size = $"{fileInfo.Size}b";
+        type = fileInfo.Type;
+
+        using (var ms = await file.CreateMemoryStreamAsync((int)fileInfo.Size))
+        {
+            fileStream = new MemoryStream(ms.ToArray());
+        }
+    }
+
+    async Task UploadFileAsync()
+    {
+
+        if (fileStream == null)
+            return;
+        // Create the content
+        var file = new MultipartFormDataContent();
+        file.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data");
+
+
+        string extension = Path.GetExtension(fileName);
+        fileName = product.Code + extension;
+
+        file.Add(new StreamContent(fileStream, (int)fileStream.Length), "image", fileName);//파라미터지정
+
+        var response = await client.PostAsync($"{url}/api/upload", file);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var uploadedFileName = await response.Content.ReadAsStringAsync();
+
+            imagePath = $"{url}/imageFiles/{product.Code}/.jpg";
+            message = "File has been uploaded successfully!";
+            file = null;
+        }
+        else
+        {
+            message = "File has been filed";
+        }
+    }
+
+}

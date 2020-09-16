@@ -36,6 +36,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="_content/BlazorInputFile/inputfile.js"></script>
 
+    <script src="_content/MatBlazor/dist/matBlazor.js"></script>
+    <link href="_content/MatBlazor/dist/matBlazor.css" rel="stylesheet" />
+
 </head>
 <body>
     <app>
@@ -67,6 +70,11 @@
                 var elem = document.querySelector(table + '_wrapper');
                 elem.parentNode.removeChild(elem);
             });
+        }
+    </script>
+    <script>
+        function numberWithCommas(x) {
+            return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
     </script>
 

@@ -68,6 +68,7 @@ D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\ZNewShopping.Admin.MvcAp
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\ZNewShopping.Admin.RazorComponent.input.cache
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\Admin\Edit.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\Admin\Index.razor.g.cs
+D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\Admin\Index2.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\Admin\Modal.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\App.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\RazorDeclaration\Pages\ChildComponent.razor.g.cs
@@ -87,6 +88,7 @@ D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\ZNewShopping.Admin.TagHe
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\ZNewShopping.Admin.RazorCoreGenerate.cache
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\Admin\Edit.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\Admin\Index.razor.g.cs
+D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\Admin\Index2.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\Admin\Modal.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\App.razor.g.cs
 D:\Git\Study\ZNewShopping.Admin\obj\Debug\netcoreapp3.1\Razor\Pages\ChildComponent.razor.g.cs

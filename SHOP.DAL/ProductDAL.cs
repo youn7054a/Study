@@ -12,20 +12,14 @@ namespace SHOP.DAL
         {
             using (var db = new ShopDBContext())
             {
-                //var pro = db.Products.ToList();
-                var pro = db.Products.FromSqlRaw("select code "
-                                            + ",(select name from CommonCode1s c where p.ComCode1 = c.CODE1) ComCode1"
-                                            + ",(select name from CommonCode2s c where p.ComCode1 = c.CODE1 and p.ComCode2 = c.CODE2) ComCode2"
-                                            + ",Name"
-                                            + ",Description"
-                                            + ",Price"
-                                            + " from Products p").ToList();
-
-                
+                var pro = db.Products
+                    .Include(p => p.CommonCode1)
+                    .Include(p => p.CommonCode2)
+                    .ToList();
                 return pro;
             }
         }
-        
+
         public void CreateProduct(Product product)
         {
             using (var db = new ShopDBContext())
@@ -69,7 +63,7 @@ namespace SHOP.DAL
         {
             using (var db = new ShopDBContext())
             {
-                return db.CommonCode2s.Where(c=>c.Code1 == code1).ToList();
+                return db.CommonCode2s.Where(c=>c.Com1Code1 == code1).ToList();
             }
         }
     }
